@@ -3,360 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mantenimiento de Consolas | Dashboard</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        /* ==========================================================================
-           RESET Y ESTILOS BASE (Tu código normalizado)
-           ========================================================================== */
-        html, body, #dashboardwrapper {
-            width: 100%;
-            height: 100%;
-            display: block;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-        ul, ol { list-style: none; padding: 0; margin: 0; }
-        a { text-decoration: none; }
-
-        /* ==========================================================================
-           ESTILOS DEL XBOX 360 DASHBOARD
-           ========================================================================== */
-        #dashboardwrapper {
-            background-color: #d5d8d9;
-            background-image: linear-gradient(top, #d5d8d9 0%, #d5d8d9 12%, #bec0c0 35%, #babcbc 42%, #b8bbbb 53%, #c5c6c6 57%, #dcdddd 62%, #e1e1e1 65%, #dddede 68%, #d4d6d6 73%, #c2c3c3 81%, #c0c2c2 84%, #c5c7c7 88%, #cacbcb 100%);
-            background-image: -webkit-linear-gradient(top, #d5d8d9 0%, #d5d8d9 12%, #bec0c0 35%, #babcbc 42%, #b8bbbb 53%, #c5c6c6 57%, #dcdddd 62%, #e1e1e1 65%, #dddede 68%, #d4d6d6 73%, #c2c3c3 81%, #c0c2c2 84%, #c5c7c7 88%, #cacbcb 100%);
-            background-size: cover;
-        }
-
-        #dashboardwrapper * {
-            box-sizing: border-box;
-            transition: all 0.4s ease;
-        }
-
-        .backdropTop {
-            position: absolute;
-            height: 65%;
-            width: 100%;
-            /* Fondo oscuro tecnológico para contraste */
-            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1605901309584-818e25960b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-            border-bottom: 3px solid #75bb3e; /* Verde Xbox */
-        }
-
-        header { height: 100px; position: relative; z-index: 10; }
-
-        #panels-area {
-            max-width: 1000px;
-            height: 600px;
-            margin: auto;
-            position: relative;
-        }
-
-        /* Navegación Superior */
-        #global-nav {
-            width: 1000px;
-            position: absolute;
-            left: 50%;
-            margin-left: -500px;
-        }
-
-        #global-nav .global-nav-list { height: 80px; }
-        
-        #global-nav .global-nav-list .global-nav-list-item {
-            display: inline-block;
-            margin-right: 20px;
-        }
-
-        #global-nav .global-nav-list .global-nav-list-item .global-nav-list-item-link {
-            display: inline-block;
-            padding: 40px 20px;
-            height: 40px;
-            color: #838383;
-            font-size: 24px;
-            font-family: "Exo", sans-serif;
-            text-transform: lowercase;
-        }
-
-        #global-nav .global-nav-list .global-nav-list-item .global-nav-list-item-link.-active {
-            color: white;
-            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
-            transform: scale(1.1);
-        }
-
-        /* Sistema de Paneles Deslizantes */
-        .global-panel-list {
-            position: absolute;
-            width: 5000px;
-            height: 100%;
-        }
-
-        .global-panel-list-item {
-            display: inline-block;
-            vertical-align: top;
-            width: 1000px;
-            margin: auto;
-            height: 600px;
-            position: absolute;
-        }
-
-        /* Posiciones absolutas de cada panel */
-        .global-panel-list-item#home { left: 0; }
-        .global-panel-list-item#servicios { left: 1100px; }
-        .global-panel-list-item#contacto { left: 2200px; }
-
-        /* Lógica de movimiento del contenedor principal */
-        .global-panel-list[data-position='#home'] { left: 0; }
-        .global-panel-list[data-position='#servicios'] { left: -1100px; }
-        .global-panel-list[data-position='#contacto'] { left: -2200px; }
-
-        /* ==========================================================================
-           CONTENIDO PERSONALIZADO (Tus tarjetas y 3D)
-           ========================================================================== */
-        
-        /* Panel Inicio */
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 100%;
-            padding-top: 50px;
-        }
-        .hero-text { color: white; max-width: 50%; }
-        .hero-text h1 { font-size: 3rem; margin: 0 0 15px 0; font-family: 'Exo', sans-serif; }
-        .hero-text h1 span { color: #75bb3e; }
-        .hero-text p { font-size: 1.2rem; color: #cbd5e1; }
-        
-        /* Panel Servicios (Tiles estilo Xbox) */
-        .tile-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding-top: 100px;
-        }
-        .tile {
-            background-color: rgba(30, 41, 59, 0.9);
-            border: 3px solid transparent;
-            padding: 30px;
-            height: 250px;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .tile:hover {
-            border-color: #75bb3e;
-            transform: translateY(-5px);
-            background-color: #0f172a;
-        }
-        .tile i { font-size: 3rem; color: #75bb3e; margin-bottom: 15px; }
-        .tile h3 { margin: 0 0 10px 0; font-family: 'Exo', sans-serif; }
-        .tile p { font-size: 0.9rem; color: #94a3b8; margin: 0; }
-
-        /* Panel Contacto */
-        .contact-card {
-            background-color: rgba(30, 41, 59, 0.9);
-            padding: 50px;
-            border-radius: 10px;
-            color: white;
-            margin-top: 100px;
-            text-align: center;
-            border: 2px solid #75bb3e;
-        }
-        .btn-whatsapp {
-            display: inline-block;
-            background-color: #25d366;
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            border-radius: 50px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .btn-whatsapp:hover { background-color: #1ebe57; transform: scale(1.05); }
-
-        /* ==========================================================================
-           VARIABLES Y CSS DEL XBOX 3D (Oculto en checkbox)
-           ========================================================================== */
-        :root {
-            --perspective: 1200;
-            --rotate-x: -15;
-            --rotate-y: -40;
-            --xbox-scale: 3;
-            --xbox-width: calc(5.9 * var(--xbox-scale));
-            --xbox-height: calc(2.5 * var(--xbox-scale));
-            --xbox-depth: calc(10.8 * var(--xbox-scale));
-            --plane-width: var(--xbox-width);
-            --plane-height: var(--xbox-depth);
-            --transition: .1s;
-        }
-        .scene { perspective: calc(var(--perspective) * 1px); transform-style: preserve-3d; height: 350px; width: 100%; display: flex; align-items: center; justify-content: center; }
-        .plane { height: calc(var(--plane-height) * 1vmin); width: calc(var(--plane-width) * 1vmin); transform-style: preserve-3d; transform: rotateX(calc(var(--rotate-x) * 1deg)) rotateY(calc(var(--rotate-y) * 1deg)) rotateX(90deg) translate3d(0, 0, calc((var(--xbox-height) * -0.5) * 1vmin)); }
-        .cuboid { --width: 15; --height: 10; --depth: 4; height: calc(var(--depth) * 1vmin); width: calc(var(--width) * 1vmin); position: absolute; transform-style: preserve-3d; transform: translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg)); }
-        .cuboid__side { transform-style: preserve-3d; }
-        .cuboid > div:nth-of-type(1) { height: calc(var(--height) * 1vmin); width: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)); }
-        .cuboid > div:nth-of-type(2) { height: calc(var(--height) * 1vmin); width: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)); }
-        .cuboid > div:nth-of-type(3) { height: calc(var(--height) * 1vmin); width: calc(var(--depth) * 1vmin); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin)); }
-        .cuboid > div:nth-of-type(4) { height: calc(var(--height) * 1vmin); width: calc(var(--depth) * 1vmin); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin)); }
-        .cuboid > div:nth-of-type(5) { height: calc(var(--depth) * 1vmin); width: calc(var(--width) * 1vmin); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin)); }
-        .cuboid > div:nth-of-type(6) { height: calc(var(--depth) * 1vmin); width: calc(var(--width) * 1vmin); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg); }
-        .xbox { --width: var(--xbox-width); --height: var(--xbox-height); --depth: var(--xbox-depth); }
-        .xbox > div:nth-of-type(1), .xbox > div:nth-of-type(2) { background: hsl(0, 0%, 80%); }
-        .xbox > div:nth-of-type(1):after, .xbox > div:nth-of-type(2):after { content: ""; position: absolute; background: repeating-radial-gradient(hsl(0, 0%, 60%) 0 50%, transparent 50% 100%) 0 0 / 6px 6px, hsl(0, 0%, 80%); width: 90%; height: 90%; left: 5%; top: 5%; }
-        .xbox > div:nth-of-type(3) { background: hsl(0, 0%, 85%); }
-        .xbox > div:nth-of-type(3):after { content: ''; background: hsl(0, 0%, 10%); height: 10%; width: 5%; position: absolute; bottom: 15%; left: 4%; }
-        .xbox > div:nth-of-type(3):before { content: ''; background: hsl(0, 0%, 10%); height: 0.5vmin; width: 0.5vmin; border-radius: 50%; bottom: 15%; left: 11%; position: absolute; }
-        .xbox > div:nth-of-type(4) { background: hsl(0, 0%, 95%); }
-        .xbox > div:nth-of-type(4):after { content: ''; height: 15%; bottom: 15%; right: 5%; position: absolute; background: repeating-linear-gradient(90deg, hsl(0, 0%, 50%) 0 90%, transparent 90% 100%) 0 0 / 20% 100%, transparent; width: 55%; }
-        .xbox > div:nth-of-type(5) { background: hsl(0, 0%, 90%); }
-        .xbox > div:nth-of-type(5):after { content: ''; background: repeating-radial-gradient(hsl(0, 0%, 0%) 0 50%, transparent 50% 100%) 0 0 / 0.75vmin 0.75vmin, hsl(0, 0%, 15%); position: absolute; border-radius: 50%; left: 50%; top: calc(var(--xbox-width) * 0.1vmin); transform: translate(-50%, 0); width: calc(var(--xbox-width) * 0.9vmin); height: calc(var(--xbox-width) * 0.9vmin); }
-        .xbox > div:nth-of-type(6) { background: hsl(0, 0%, 75%); }
-        .xbox__logo { position: absolute; fill: hsl(0, 0%, 55%); }
-        .xbox > div:nth-of-type(5) .xbox__logo { bottom: 5%; left: 5%; height: 4%; transform: rotate(-90deg); }
-        .xbox > div:nth-of-type(3) .xbox__logo { right: 5%; top: 10%; height: 20%; }
-        .xbox__label { font-family: sans-serif; bottom: 9%; left: 8.5%; font-size: 0.5rem; position: absolute; transform-origin: 0 50%; transform: rotate(-90deg); color: hsl(0, 0%, 55%); }
-        .xbox__shadow { height: 100%; width: 100%; background: radial-gradient(circle at 50% 50%, hsla(0, 0%, 0%, 0.5), transparent); filter: blur(5px); position: absolute; }
-        .xbox__plane { height: 100%; width: 100%; transform-style: preserve-3d; transform: translate3d(0, 0, 0.5vmin); transform-origin: 50% 100%; }
-        .xbox__leg { --width: 1; --depth: 0.5; --height: 0.25; transform: translate3d(0, 0vmin, calc(var(--height) * 0.5vmin)); }
-        .xbox__leg:nth-of-type(1) { top: 5%; left: 5%; }
-        .xbox__leg:nth-of-type(2) { top: 5%; right: 5%; }
-        .xbox__leg:nth-of-type(3) { bottom: 5%; left: 5%; }
-        .xbox__leg:nth-of-type(4) { bottom: 5%; right: 5%; }
-        .xbox__leg > div:nth-of-type(1) { background: hsl(0, 0%, 80%); }
-        .xbox__leg > div:nth-of-type(2) { background: hsl(0, 0%, 83%); }
-        .xbox__leg > div:nth-of-type(3) { background: hsl(0, 0%, 88%); }
-        .xbox__leg > div:nth-of-type(4) { background: hsl(0, 0%, 85%); }
-        .xbox__leg > div:nth-of-type(5) { background: hsl(0, 0%, 85%); }
-        .xbox__leg > div:nth-of-type(6) { background: hsl(0, 0%, 75%); }
-        [type="checkbox"] { display: none; }
-        :checked ~ #dashboardwrapper .scene .xbox__plane { transform: rotateX(-90deg); }
-        .tilter { position: absolute; height: 100%; width: 100%; transform: translate3d(0, 0, 1px); cursor: pointer; z-index: 100; }
-    </style>
+    <title>Dashboard de Servicios - IAN Reparaciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;800&family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Checkbox para rotar el Xbox 3D -->
-    <input id="tilt" type="checkbox"/>
-
-    <div id="dashboardwrapper">
-        <div class="backdropTop"></div>
-        
-        <header>
-            <nav id="global-nav">
-                <ul class="global-nav-list">
-                    <!-- Menú Principal -->
-                    <li class="global-nav-list-item"><a href="#home" class="global-nav-list-item-link -active">inicio</a></li>
-                    <li class="global-nav-list-item"><a href="#servicios" class="global-nav-list-item-link">servicios</a></li>
-                    <li class="global-nav-list-item"><a href="#contacto" class="global-nav-list-item-link">contacto</a></li>
-                </ul>
+    <div class="dashboard-wrapper">
+        <header class="dashboard-header">
+            <nav class="nav-tabs">
+                <a href="#" class="nav-link">BING</a>
+                <a href="#" class="nav-link">INICIO</a>
+                <a href="#" class="nav-link active">SERVICIOS</a> <a href="#" class="nav-link">CONTACTO</a>
             </nav>
         </header>
 
-        <section>
-            <div id="panels-area">
-                <ul data-position="#home" class="global-panel-list">
-                    
-                    <!-- PANEL 1: INICIO -->
-                    <li id="home" class="global-panel-list-item">
-                        <div class="hero-content">
-                            <div class="hero-text">
-                                <h1>Especialistas en <span>Consolas</span></h1>
-                                <p>Diagnóstico a nivel componente, mantenimiento térmico preventivo y reparaciones especializadas.</p>
-                            </div>
-                            
-                            <!-- Consola 3D Interactiva -->
-                            <div class="scene">
-                                <div class="plane">
-                                    <div class="xbox__shadow"></div>
-                                    <div class="xbox__plane">
-                                        <div class="cuboid xbox">
-                                            <div class="cuboid__side">
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                                <label class="tilter" for="tilt"></label>
-                                            </div>
-                                            <div class="cuboid__side"></div>
-                                            <div class="cuboid__side"><svg class="xbox__logo" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.102 21.033C6.211 22.881 8.977 24 12 24c3.026 0 5.789-1.119 7.902-2.967 1.877-1.912-4.316-8.709-7.902-11.417-3.582 2.708-9.779 9.505-7.898 11.417zm11.16-14.406c2.5 2.961 7.484 10.313 6.076 12.912C23.002 17.48 24 14.861 24 12.004c0-3.34-1.365-6.362-3.57-8.536 0 0-.027-.022-.082-.042-.063-.022-.152-.045-.281-.045-.592 0-1.985.434-4.805 3.246zM3.654 3.426c-.057.02-.082.041-.086.042C1.365 5.642 0 8.664 0 12.004c0 2.854.998 5.473 2.661 7.533-1.401-2.605 3.579-9.951 6.08-12.91-2.82-2.813-4.216-3.245-4.806-3.245-.131 0-.223.021-.281.046v-.002zM12 3.551S9.055 1.828 6.755 1.746c-.903-.033-1.454.295-1.521.339C7.379.646 9.659 0 11.984 0H12c2.334 0 4.605.646 6.766 2.085-.068-.046-.615-.372-1.52-.339C14.946 1.828 12 3.545 12 3.545v.006z"/></svg></div>
-                                            <div class="cuboid__side"></div>
-                                            <div class="cuboid__side"><svg class="xbox__logo" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.102 21.033C6.211 22.881 8.977 24 12 24c3.026 0 5.789-1.119 7.902-2.967 1.877-1.912-4.316-8.709-7.902-11.417-3.582 2.708-9.779 9.505-7.898 11.417zm11.16-14.406c2.5 2.961 7.484 10.313 6.076 12.912C23.002 17.48 24 14.861 24 12.004c0-3.34-1.365-6.362-3.57-8.536 0 0-.027-.022-.082-.042-.063-.022-.152-.045-.281-.045-.592 0-1.985.434-4.805 3.246zM3.654 3.426c-.057.02-.082.041-.086.042C1.365 5.642 0 8.664 0 12.004c0 2.854.998 5.473 2.661 7.533-1.401-2.605 3.579-9.951 6.08-12.91-2.82-2.813-4.216-3.245-4.806-3.245-.131 0-.223.021-.281.046v-.002zM12 3.551S9.055 1.828 6.755 1.746c-.903-.033-1.454.295-1.521.339C7.379.646 9.659 0 11.984 0H12c2.334 0 4.605.646 6.766 2.085-.068-.046-.615-.372-1.52-.339C14.946 1.828 12 3.545 12 3.545v.006z"/></svg><span class="xbox__label">XBOX</span><label class="tilter" for="tilt"></label></div>
-                                            <div class="cuboid__side">
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                                <div class="cuboid xbox__leg"><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div><div class="cuboid__side"></div></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <!-- PANEL 2: SERVICIOS -->
-                    <li id="servicios" class="global-panel-list-item">
-                        <div class="tile-grid">
-                            <div class="tile">
-                                <i class="fa-solid fa-fan"></i>
-                                <h3>Mantenimiento</h3>
-                                <p>Limpieza profunda y reemplazo de pasta térmica.</p>
-                            </div>
-                            <div class="tile">
-                                <i class="fa-solid fa-microchip"></i>
-                                <h3>Microsoldadura</h3>
-                                <p>Reparación de placas base, puertos HDMI y centros de carga.</p>
-                            </div>
-                            <div class="tile">
-                                <i class="fa-solid fa-gamepad"></i>
-                                <h3>Reparación Controles</h3>
-                                <p>Solución de drift en joysticks, botones y baterías.</p>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <!-- PANEL 3: CONTACTO -->
-                    <li id="contacto" class="global-panel-list-item">
-                        <div class="contact-card">
-                            <h2>¿Tu equipo presenta fallas?</h2>
-                            <p>Cotiza tu reparación sin compromiso. Atención directa y especializada.</p>
-                            <p><i class="fa-solid fa-location-dot"></i> Cuautitlán, Estado de México.</p>
-                            <a href="https://wa.me/525500000000" class="btn-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> Enviar Mensaje
-                            </a>
-                        </div>
-                    </li>
-                    
-                </ul>
+        <main class="dashboard-content">
+            <div class="section-title-container">
+                <h1 class="section-title">SERVICIOS TÉCNICOS INTEGRALES</h1>
             </div>
-        </section>
+
+            <div class="shelf-container">
+                <div class="center-background">
+                    <div class="dead-space-placeholder"></div>
+                </div>
+
+                <div class="gabinet gabinet-ps gabinet-angle-left">
+                    <div class="gabinet-side gabinet-side-front"></div>
+                    <div class="service-tile tile-large tile-ps">
+                        <div class="tile-content">
+                            <div class="logo-container ps-logos">
+                                <i class="fab fa-playstation ps-logo"></i>
+                                <i class="fas fa-microchip chip-logo"></i>
+                                <i class="fas fa-gamepad controller-logo ps5-controller"></i>
+                            </div>
+                            <div class="tile-description">
+                                <h3>PLAYSTATION 5 & 4:</h3>
+                                <p>Mantenimiento Térmico, Reparación de Puertos HDMI, Error de Lectura, Microsoldadura.</p>
+                            </div>
+                            <button class="details-button">
+                                <i class="fas fa-plus"></i>
+                                VER DETALLES
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gabinet gabinet-right-container gabinet-angle-right">
+                    <div class="gabinet-side gabinet-side-front"></div>
+                    
+                    <div class="service-tile tile-small tile-xbox">
+                        <div class="tile-content">
+                            <i class="fab fa-xbox xbox-logo"></i>
+                            <div class="tile-description">
+                                <h3>XBOX SERIES & ONE:</h3>
+                                <p>Reparación de Mandos, Drift, Limpieza de Polvo, Sustitución de Piezas.</p>
+                            </div>
+                            <button class="details-button icon-only-button">
+                                <i class="fas fa-plus"></i>
+                                VER DETALLES
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="service-tile tile-small tile-switch">
+                        <div class="tile-content">
+                            <i class="fas fa-gamepad switch-logo"></i>
+                            <div class="tile-description">
+                                <h3>NINTENDO SWITCH:</h3>
+                                <p>Sustitución de Pantalla, Joy-Con Drift, Puerto USB-C damaged, Batería.</p>
+                            </div>
+                            <button class="details-button plus-only-button">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>IAN REPARACIONES :: Ubicados en Cuautitlán, Estado de México :: Tu Experto Gamer</p>
+        </footer>
     </div>
 
-    <!-- Script de navegación (Sin jQuery, mucho más rápido) -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navLinks = document.querySelectorAll('.global-nav-list-item-link');
-            const panelContainer = document.querySelector('.global-panel-list');
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Quitar clase activa a todos
-                    navLinks.forEach(l => l.classList.remove('-active'));
-                    
-                    // Agregar clase activa al presionado
-                    link.classList.add('-active');
-                    
-                    // Mover el panel
-                    const targetId = link.getAttribute('href');
-                    panelContainer.setAttribute('data-position', targetId);
-                });
-            });
+        // Efecto de paralaje responsivo básico
+        const shelf = document.querySelector('.shelf-container');
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) { // Solo en escritorio
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 20;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 20;
+                shelf.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            } else {
+                shelf.style.transform = ''; // Resetear en móvil
+            }
         });
     </script>
 </body>
