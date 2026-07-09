@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xbox 360 Dashboard :: Modernizado</title>
+  <title>Xbox 360 Dashboard :: Responsivo</title>
   <link href="https://fonts.googleapis.com/css?family=Exo:100,200,300,400,500" rel="stylesheet" type="text/css">
   
   <style>
@@ -18,7 +18,7 @@
 
     body {
       font-family: "Exo", sans-serif;
-      overflow: hidden; /* Evita el scroll nativo */
+      overflow: hidden; 
       background-color: #d5d8d9;
     }
 
@@ -98,7 +98,7 @@
     }
 
     .panel {
-      flex: 0 0 100%; /* Cada panel ocupa el 100% del contenedor visible */
+      flex: 0 0 100%; 
       display: flex;
       justify-content: center;
       align-items: center;
@@ -118,7 +118,6 @@
       position: relative;
     }
 
-    /* Sombra base bajo los tiles */
     .tile-grid::after {
       content: "";
       position: absolute;
@@ -140,7 +139,7 @@
       border-color: white;
       transform: scale(1.03);
       outline: none;
-      background: #86d249; /* Un verde ligeramente más brillante al hacer hover */
+      background: #86d249; 
     }
 
     /* ==========================================================================
@@ -159,6 +158,66 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       outline: none;
       font-family: "Exo", sans-serif;
+    }
+
+    /* ==========================================================================
+       Responsividad (Móviles y Tablets)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      header {
+        height: 80px;
+        justify-content: flex-start;
+        padding: 0 20px;
+      }
+
+      .global-nav-list {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 20px;
+        padding-bottom: 5px;
+        width: 100%;
+        /* Oculta la barra de desplazamiento nativa pero permite el touch */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+      }
+      
+      .global-nav-list::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+
+      .nav-link {
+        font-size: 18px;
+        scroll-snap-align: start;
+        white-space: nowrap;
+      }
+
+      #panels-area {
+        margin: 20px auto 0 auto;
+      }
+
+      .panel {
+        align-items: flex-start; /* En móvil, los cuadros caen desde arriba */
+        padding: 10px;
+      }
+
+      .tile-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 120px); /* 12 elementos en 6 filas */
+        overflow-y: auto; /* Permite hacer scroll hacia abajo en la cuadrícula */
+        height: 100%;
+        width: 100%;
+        padding-bottom: 40px;
+        scrollbar-width: none;
+      }
+      
+      .tile-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .bing-form input {
+        font-size: 1.2rem;
+        padding: 15px 20px;
+      }
     }
   </style>
 </head>
@@ -228,22 +287,21 @@
     document.addEventListener("DOMContentLoaded", () => {
       const links = document.querySelectorAll('.nav-link');
       const slider = document.getElementById('slider');
-      let currentIndex = 1; // Inicia en "Home" (índice 1)
+      let currentIndex = 1; 
 
-      // Función para mover el menú
       const moveToPanel = (index) => {
-        // Actualizar links activos
         links.forEach(link => link.classList.remove('active'));
         links[index].classList.add('active');
-
-        // Deslizar el contenedor (Multiplica el índice por -100% de su ancho base)
         slider.style.transform = `translateX(-${index * 100}%)`;
+        
+        // Si estamos en móvil y presionamos un enlace, hacemos que el menú haga scroll automático hacia ese botón
+        if (window.innerWidth <= 768) {
+          links[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
       };
 
-      // Inicializar posición
       moveToPanel(currentIndex);
 
-      // Evento de click para la barra de navegación superior
       links.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
@@ -252,7 +310,6 @@
         });
       });
 
-      // Evento de teclado para navegar con las teclas de corchetes [ y ] como en el original
       window.addEventListener('keypress', (e) => {
         if (e.key === '[') {
           currentIndex = Math.max(0, currentIndex - 1);
