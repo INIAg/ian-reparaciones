@@ -1,106 +1,268 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Servicios - IAN Reparaciones</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;800&family=Oswald:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xbox 360 Dashboard :: Modernizado</title>
+  <link href="https://fonts.googleapis.com/css?family=Exo:100,200,300,400,500" rel="stylesheet" type="text/css">
+  
+  <style>
+    /* ==========================================================================
+       Reset y Estilos Generales
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Exo", sans-serif;
+      overflow: hidden; /* Evita el scroll nativo */
+      background-color: #d5d8d9;
+    }
+
+    #dashboardwrapper {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom, #d5d8d9 0%, #bec0c0 35%, #babcbc 42%, #c5c6c6 57%, #dcdddd 62%, #cacbcb 100%);
+    }
+
+    .backdropTop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 65%;
+      background: url("http://www.imgbase.info/images/safe-wallpapers/video_games/dead_space/12784_dead_space.jpg") center/cover no-repeat;
+      z-index: 0;
+      opacity: 0.9;
+    }
+
+    /* ==========================================================================
+       Navegación Superior (Menú)
+       ========================================================================== */
+    header {
+      position: relative;
+      z-index: 10;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .global-nav-list {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #838383;
+      font-size: 24px;
+      padding-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #b0b0b0;
+    }
+
+    .nav-link.active {
+      color: white;
+      text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ==========================================================================
+       Área de Paneles (Slider)
+       ========================================================================== */
+    #panels-area {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1100px;
+      margin: 40px auto 0 auto;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    .panels-container {
+      display: flex;
+      width: 100%;
+      height: 85%;
+      transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .panel {
+      flex: 0 0 100%; /* Cada panel ocupa el 100% del contenedor visible */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* ==========================================================================
+       Tiles (Cuadros verdes) usando CSS Grid
+       ========================================================================== */
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 15px;
+      width: 90%;
+      height: 90%;
+      position: relative;
+    }
+
+    /* Sombra base bajo los tiles */
+    .tile-grid::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      width: 100%;
+      height: 20px;
+      box-shadow: 0px 30px 40px rgba(0,0,0,0.4);
+      z-index: -1;
+    }
+
+    .tile-item {
+      background: #75bb3e;
+      border: 3px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .tile-item:hover, .tile-item:focus {
+      border-color: white;
+      transform: scale(1.03);
+      outline: none;
+      background: #86d249; /* Un verde ligeramente más brillante al hacer hover */
+    }
+
+    /* ==========================================================================
+       Formulario Bing
+       ========================================================================== */
+    .bing-form {
+      width: 80%;
+    }
+
+    .bing-form input {
+      width: 100%;
+      padding: 20px 30px;
+      border-radius: 40px;
+      border: none;
+      font-size: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      outline: none;
+      font-family: "Exo", sans-serif;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="dashboard-wrapper">
-        <header class="dashboard-header">
-            <nav class="nav-tabs">
-                <a href="#" class="nav-link">BING</a>
-                <a href="#" class="nav-link">INICIO</a>
-                <a href="#" class="nav-link active">SERVICIOS</a> <a href="#" class="nav-link">CONTACTO</a>
-            </nav>
-        </header>
+  <div id="dashboardwrapper">
+    <div class="backdropTop"></div>
+    
+    <header>
+      <nav id="global-nav">
+        <ul class="global-nav-list">
+          <li><a href="#" class="nav-link" data-index="0">bing</a></li>
+          <li><a href="#" class="nav-link active" data-index="1">home</a></li>
+          <li><a href="#" class="nav-link" data-index="2">social</a></li>
+          <li><a href="#" class="nav-link" data-index="3">games</a></li>
+          <li><a href="#" class="nav-link" data-index="4">tv & movies</a></li>
+          <li><a href="#" class="nav-link" data-index="5">music</a></li>
+          <li><a href="#" class="nav-link" data-index="6">apps</a></li>
+          <li><a href="#" class="nav-link" data-index="7">settings</a></li>
+        </ul>
+      </nav>
+    </header>
 
-        <main class="dashboard-content">
-            <div class="section-title-container">
-                <h1 class="section-title">SERVICIOS TÉCNICOS INTEGRALES</h1>
-            </div>
+    <section id="panels-area">
+      <div class="panels-container" id="slider">
+        
+        <div class="panel">
+          <form class="bing-form" onsubmit="event.preventDefault();">
+            <input type="text" placeholder="search...">
+          </form>
+        </div>
 
-            <div class="shelf-container">
-                <div class="center-background">
-                    <div class="dead-space-placeholder"></div>
-                </div>
+        <div class="panel">
+          <div class="tile-grid">
+            <div tabindex="1" class="tile-item"></div>
+            <div tabindex="2" class="tile-item"></div>
+            <div tabindex="3" class="tile-item"></div>
+            <div tabindex="4" class="tile-item"></div>
+            <div tabindex="5" class="tile-item"></div>
+            <div tabindex="6" class="tile-item"></div>
+            <div tabindex="7" class="tile-item"></div>
+            <div tabindex="8" class="tile-item"></div>
+            <div tabindex="9" class="tile-item"></div>
+            <div tabindex="10" class="tile-item"></div>
+            <div tabindex="11" class="tile-item"></div>
+            <div tabindex="12" class="tile-item"></div>
+          </div>
+        </div>
 
-                <div class="gabinet gabinet-ps gabinet-angle-left">
-                    <div class="gabinet-side gabinet-side-front"></div>
-                    <div class="service-tile tile-large tile-ps">
-                        <div class="tile-content">
-                            <div class="logo-container ps-logos">
-                                <i class="fab fa-playstation ps-logo"></i>
-                                <i class="fas fa-microchip chip-logo"></i>
-                                <i class="fas fa-gamepad controller-logo ps5-controller"></i>
-                            </div>
-                            <div class="tile-description">
-                                <h3>PLAYSTATION 5 & 4:</h3>
-                                <p>Mantenimiento Térmico, Reparación de Puertos HDMI, Error de Lectura, Microsoldadura.</p>
-                            </div>
-                            <button class="details-button">
-                                <i class="fas fa-plus"></i>
-                                VER DETALLES
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <div class="panel"><div class="tile-grid"><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div></div></div>
+        
+        <div class="panel"><div class="tile-grid"><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div></div></div>
+        
+        <div class="panel"><div class="tile-grid"><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div></div></div>
+        
+        <div class="panel"><div class="tile-grid"><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div></div></div>
+        
+        <div class="panel"><div class="tile-grid"><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div></div></div>
+        
+        <div class="panel"><div class="tile-grid"><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div><div class="tile-item"></div></div></div>
 
-                <div class="gabinet gabinet-right-container gabinet-angle-right">
-                    <div class="gabinet-side gabinet-side-front"></div>
-                    
-                    <div class="service-tile tile-small tile-xbox">
-                        <div class="tile-content">
-                            <i class="fab fa-xbox xbox-logo"></i>
-                            <div class="tile-description">
-                                <h3>XBOX SERIES & ONE:</h3>
-                                <p>Reparación de Mandos, Drift, Limpieza de Polvo, Sustitución de Piezas.</p>
-                            </div>
-                            <button class="details-button icon-only-button">
-                                <i class="fas fa-plus"></i>
-                                VER DETALLES
-                            </button>
-                        </div>
-                    </div>
+      </div>
+    </section>
+  </div>
 
-                    <div class="service-tile tile-small tile-switch">
-                        <div class="tile-content">
-                            <i class="fas fa-gamepad switch-logo"></i>
-                            <div class="tile-description">
-                                <h3>NINTENDO SWITCH:</h3>
-                                <p>Sustitución de Pantalla, Joy-Con Drift, Puerto USB-C damaged, Batería.</p>
-                            </div>
-                            <button class="details-button plus-only-button">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const links = document.querySelectorAll('.nav-link');
+      const slider = document.getElementById('slider');
+      let currentIndex = 1; // Inicia en "Home" (índice 1)
 
-            </div>
-        </main>
+      // Función para mover el menú
+      const moveToPanel = (index) => {
+        // Actualizar links activos
+        links.forEach(link => link.classList.remove('active'));
+        links[index].classList.add('active');
 
-        <footer class="dashboard-footer">
-            <p>IAN REPARACIONES :: Ubicados en Cuautitlán, Estado de México :: Tu Experto Gamer</p>
-        </footer>
-    </div>
+        // Deslizar el contenedor (Multiplica el índice por -100% de su ancho base)
+        slider.style.transform = `translateX(-${index * 100}%)`;
+      };
 
-    <script>
-        // Efecto de paralaje responsivo básico
-        const shelf = document.querySelector('.shelf-container');
-        document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) { // Solo en escritorio
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 20;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 20;
-                shelf.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-            } else {
-                shelf.style.transform = ''; // Resetear en móvil
-            }
+      // Inicializar posición
+      moveToPanel(currentIndex);
+
+      // Evento de click para la barra de navegación superior
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          currentIndex = parseInt(e.target.getAttribute('data-index'));
+          moveToPanel(currentIndex);
         });
-    </script>
+      });
+
+      // Evento de teclado para navegar con las teclas de corchetes [ y ] como en el original
+      window.addEventListener('keypress', (e) => {
+        if (e.key === '[') {
+          currentIndex = Math.max(0, currentIndex - 1);
+          moveToPanel(currentIndex);
+        } else if (e.key === ']') {
+          currentIndex = Math.min(links.length - 1, currentIndex + 1);
+          moveToPanel(currentIndex);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
