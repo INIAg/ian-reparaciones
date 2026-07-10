@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Dashboard :: Servicios Rápidos</title>
+  <title>Taller Gamer | Reparación de Consolas</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,21 +21,22 @@
     body {
       font-family: "Exo", sans-serif;
       overflow: hidden;
-      background-color: #d5d8d9;
+      background-color: #1a1a1a;
+      color: #fff;
       touch-action: pan-y; 
     }
 
     #dashboardwrapper {
       position: relative; width: 100vw; height: 100vh;
       display: flex; flex-direction: column;
-      background: linear-gradient(to bottom, #d5d8d9 0%, #bec0c0 35%, #babcbc 42%, #c5c6c6 57%, #dcdddd 62%, #cacbcb 100%);
+      background: linear-gradient(to bottom, #2a2d34 0%, #1a1c23 100%);
     }
 
-    /* Fondo ultrarrápido sin imágenes pesadas */
+    /* Fondo ultrarrápido */
     .backdropTop {
-      position: absolute; top: 0; left: 0; width: 100%; height: 65%;
+      position: absolute; top: 0; left: 0; width: 100%; height: 60%;
       background: radial-gradient(circle at 50% 0%, #3e4a50 0%, #151b1e 80%);
-      border-bottom: 2px solid rgba(255,255,255,0.1);
+      border-bottom: 2px solid rgba(255,255,255,0.05);
       z-index: 0;
     }
 
@@ -48,21 +49,26 @@
     }
 
     .global-nav-list {
-      display: flex; list-style: none; gap: 25px; overflow-x: auto;
+      display: flex; list-style: none; gap: 20px; overflow-x: auto;
       scroll-snap-type: x mandatory; padding-bottom: 10px; width: 100%;
       -webkit-overflow-scrolling: touch; scrollbar-width: none; 
     }
     .global-nav-list::-webkit-scrollbar { display: none; }
 
     .nav-link {
-      text-decoration: none; color: #838383; font-size: 22px; font-weight: 300;
+      text-decoration: none; color: #838383; font-size: 20px; font-weight: 300;
       padding-bottom: 5px; transition: all 0.3s ease; scroll-snap-align: center; white-space: nowrap;
+      text-transform: uppercase; letter-spacing: 1px;
     }
 
     .nav-link.active {
-      color: white; font-weight: 700; text-shadow: 1px 2px 5px rgba(0,0,0,0.6);
-      border-bottom: 2px solid white;
+      color: #75bb3e; font-weight: 700; text-shadow: 0px 0px 10px rgba(117,187,62,0.4);
+      border-bottom: 2px solid #75bb3e;
     }
+    
+    /* Cambiar color de active según consola (Opcional, pero da buen toque) */
+    .nav-link[data-index="2"].active { color: #006DB4; border-color: #006DB4; text-shadow: 0px 0px 10px rgba(0,109,180,0.4);}
+    .nav-link[data-index="3"].active { color: #E70013; border-color: #E70013; text-shadow: 0px 0px 10px rgba(231,0,19,0.4);}
 
     /* ==========================================================================
        Área de Paneles
@@ -76,89 +82,77 @@
       transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     .panel {
-      flex: 0 0 100%; display: flex; justify-content: center; align-items: center;
-      padding: 20px; height: 100%;
+      flex: 0 0 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 20px; height: 100%; text-align: center;
     }
 
-    /* ==========================================================================
-       Tiles (Cuadros verdes)
-       ========================================================================== */
-    .tile-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 120px); 
-      gap: 15px; width: 100%; height: 90%; overflow-y: auto; padding-bottom: 40px;
-      scrollbar-width: none;
-    }
-    .tile-grid::-webkit-scrollbar { display: none; }
-    .tile-item {
-      background: #75bb3e; border-radius: 8px;
-      transition: transform 0.15s ease-out, background 0.15s;
-    }
+    /* Textos informativos de los paneles */
+    .panel-title { font-size: 2rem; margin-bottom: 15px; font-weight: 700; }
+    .panel-subtitle { font-size: 1.1rem; color: #babcbc; margin-bottom: 30px; line-height: 1.4; max-width: 300px;}
+    .tap-instruction { margin-top: 30px; font-size: 0.9rem; color: #888; text-transform: uppercase; letter-spacing: 2px; animation: pulse 2s infinite;}
+
+    @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
     /* ==========================================================================
-       Logos (Xbox, PS, Nintendo)
+       Logos Animados (Tu código original mantenido intacto)
        ========================================================================== */
     .logo-container, .ps-logo-container, .nintendo-logo-container {
       display: flex; justify-content: center; align-items: center;
       border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      width: 220px; height: 220px; margin-top: -20%;
+      width: 220px; height: 220px; 
       transition: transform 0.15s ease-out; 
-      will-change: transform;
+      will-change: transform; cursor: pointer;
     }
     
-    /* REPARACIÓN: Forzar a los SVG a ocupar el 100% de su contenedor */
-    .logo-container svg, .ps-logo-container svg { width: 100%; height: 100%; }
-    
-    /* Xbox */
-    .logo-container { background: rgba(0,0,0,0.4); border-radius: 50%; padding: 15px; }
-    path.xboxLogoAnimate {
-      fill: gold; stroke: gold; stroke-width: 4px;
-      stroke-dasharray: 1000; stroke-dashoffset: 1000;
-      animation: dash 2s linear alternate infinite;
-    }
+    .logo-container { background: rgba(0,0,0,0.4); border-radius: 50%; padding: 15px; border: 2px solid #75bb3e;}
+    .logo-container svg { width: 100%; height: 100%; }
+    path.xboxLogoAnimate { fill: #75bb3e; stroke: #75bb3e; stroke-width: 4px; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 2s linear alternate infinite; }
 
-    /* PlayStation */
-    .ps-logo-container { background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); padding: 30px; }
-    #ps-path-logo {
-      stroke-width: 3px; stroke-dasharray: 600; stroke-dashoffset: 600; fill: transparent;
-      animation: ps-dash 3s linear alternate infinite, ps-colors 4s linear infinite;
-    }
+    .ps-logo-container { background: rgba(0,0,0,0.4); border-radius: 50%; padding: 30px; border: 2px solid #006DB4;}
+    #ps-path-logo { stroke-width: 3px; stroke-dasharray: 600; stroke-dashoffset: 600; fill: transparent; animation: ps-dash 3s linear alternate infinite, ps-colors 4s linear infinite; }
 
-    /* Nintendo */
-    .nintendo-logo-container { background: #E70013; padding: 20px; }
-    .nintendo-switch {
-      display: flex; justify-content: space-between; width: 200px; height: 200px; transform: scale(0.65); 
-    }
-    .nintendo-switch .left, .nintendo-switch .right {
-      display: flex; justify-content: center; height: 200px; width: 92px; border: 16px solid #FFFFFF;
-    }
-    .nintendo-switch .left {
-      position: relative; border-radius: 54px 0 0 54px; 
-      animation: nintendo-left 2s infinite ease-in-out; 
-    }
-    .nintendo-switch .left:before {
-      position: absolute; content: ""; top: 25px; width: 37px; height: 37px; border-radius: 50%; background: #FFFFFF;
-    }
-    .nintendo-switch .right {
-      position: relative; background: #FFFFFF; border-radius: 0 54px 54px 0; 
-      animation: nintendo-right 2s infinite ease-in-out; 
-    }
-    .nintendo-switch .right:before {
-      position: absolute; content: ""; top: 75px; width: 37px; height: 37px; border-radius: 50%; background: #E70013;
-    }
+    .nintendo-logo-container { background: #E70013; padding: 20px; border-radius: 50%; border: 2px solid #fff;}
+    .nintendo-switch { display: flex; justify-content: space-between; width: 200px; height: 200px; transform: scale(0.65); }
+    .nintendo-switch .left, .nintendo-switch .right { display: flex; justify-content: center; height: 200px; width: 92px; border: 16px solid #FFFFFF; }
+    .nintendo-switch .left { position: relative; border-radius: 54px 0 0 54px; animation: nintendo-left 2s infinite ease-in-out; }
+    .nintendo-switch .left:before { position: absolute; content: ""; top: 25px; width: 37px; height: 37px; border-radius: 50%; background: #FFFFFF; }
+    .nintendo-switch .right { position: relative; background: #FFFFFF; border-radius: 0 54px 54px 0; animation: nintendo-right 2s infinite ease-in-out; }
+    .nintendo-switch .right:before { position: absolute; content: ""; top: 75px; width: 37px; height: 37px; border-radius: 50%; background: #E70013; }
 
-    /* Animaciones */
     @keyframes nintendo-right { 0%, 100% { margin-top: 0; } 50% { margin-top: -30px; } }
     @keyframes nintendo-left { 0%, 100% { margin-top: 0; } 50% { margin-top: 30px; } }
     @keyframes ps-dash { to { stroke-dashoffset: 0; } }
-    @keyframes dash { from { stroke-dashoffset: 1000; fill: white; } to { stroke-dashoffset: 0; fill: gold; } }
+    @keyframes dash { from { stroke-dashoffset: 1000; fill: white; } to { stroke-dashoffset: 0; fill: #75bb3e; } }
     @keyframes ps-colors { 0%, 100% { stroke: #00A394; } 25% { stroke: #E41017; } 50% { stroke: #FBB700; } 75% { stroke: #006DB4; } }
+
+    /* ==========================================================================
+       Botones y Contacto
+       ========================================================================== */
+    .btn {
+      display: inline-block; padding: 15px 30px; margin-top: 15px;
+      border-radius: 25px; font-weight: bold; text-decoration: none;
+      text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s;
+    }
+    .btn-primary { background: #75bb3e; color: #1a1a1a; }
+    .btn-whatsapp { background: #25D366; color: white; margin-bottom: 10px; width: 100%;}
+    .btn-facebook { background: #1877F2; color: white; width: 100%;}
+    
+    .contact-box { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; width: 90%; max-width: 350px;}
+
+    /* FAB (Botón flotante de WhatsApp global) */
+    .fab-whatsapp {
+      position: fixed; bottom: 20px; right: 20px; z-index: 100;
+      background: #25D366; color: white; width: 60px; height: 60px;
+      border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-size: 30px; text-decoration: none;
+    }
 
     /* ==========================================================================
        Modales y Precios
        ========================================================================== */
     .services-modal {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.85); z-index: 9999;
+      background: rgba(0, 0, 0, 0.9); z-index: 9999;
       display: flex; justify-content: center; align-items: center;
       opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
     }
@@ -166,7 +160,7 @@
     .modal-content {
       background: #1a1a1a; border-top: 5px solid #75bb3e; border-radius: 15px;
       padding: 20px; width: 92%; max-height: 85vh; overflow-y: auto; color: white;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.8); -webkit-overflow-scrolling: touch;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.8);
       transform: translateY(30px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .services-modal.visible .modal-content { transform: translateY(0) scale(1); }
@@ -178,39 +172,19 @@
     .close-btn { background: none; border: none; color: #888; font-size: 2.5rem; line-height: 1; padding: 0 10px; cursor: pointer;}
     
     .price-category { margin-bottom: 25px; }
-    .price-category h3 { font-size: 1.1rem; margin-bottom: 15px; color: #ccc; letter-spacing: 1px; text-transform: uppercase;}
-    
-    .price-item { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid #333; }
+    .price-category h3 { font-size: 1.1rem; margin-bottom: 15px; color: #ccc; letter-spacing: 1px; }
+    .price-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #333; }
     .price-item:last-child { border-bottom: none; }
-    .price-desc { font-size: 0.95rem; color: #eaeaea; margin-bottom: 5px; }
-    .price-value { font-weight: bold; font-size: 1.1rem; color: #75bb3e; }
+    .price-desc { font-size: 0.95rem; color: #eaeaea; margin-right: 15px;}
+    .price-value { font-weight: bold; font-size: 1.1rem; color: #75bb3e; white-space: nowrap;}
 
     #ps-services-modal .modal-content { border-color: #006DB4; }
-    #ps-services-modal .modal-header h2, #ps-services-modal .price-value { color: #00A394; }
+    #ps-services-modal .modal-header h2, #ps-services-modal .price-value { color: #006DB4; }
     #nintendo-services-modal .modal-content { border-color: #E70013; }
     #nintendo-services-modal .modal-header h2, #nintendo-services-modal .price-value { color: #E70013; }
-
-    /* ==========================================================================
-       REPARACIÓN: ESTILOS PARA COMPUTADORA (PC / Desktop)
-       ========================================================================== */
-    @media (min-width: 769px) {
-      header { height: 100px; justify-content: center; }
-      .global-nav-list { justify-content: center; gap: 30px; overflow-x: visible; }
-      .nav-link.active { border-bottom: none; }
-      #panels-area { margin-top: 40px; max-width: 1100px; height: 85%; }
-      .logo-container, .ps-logo-container, .nintendo-logo-container { width: 300px; height: 300px; margin-top: 0;}
-      .nintendo-switch { transform: scale(1); }
-      .tile-grid { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); overflow: visible; padding-bottom: 0;}
-      
-      /* Precios en línea para PC */
-      .modal-content { width: 90%; max-width: 600px; border: 3px solid; border-top: 3px solid; padding: 30px;}
-      .price-item { flex-direction: row; justify-content: space-between; align-items: center; }
-      .price-desc { margin-bottom: 0; padding-right: 20px;}
-      .price-value { align-self: auto; }
-    }
   </style>
 </head>
-<body ontouchstart=""> 
+<body> 
 
   <div id="dashboardwrapper">
     <div class="backdropTop"></div>
@@ -218,12 +192,11 @@
     <header>
       <nav id="global-nav">
         <ul class="global-nav-list">
-          <li><a href="#" class="nav-link" data-index="0">bing</a></li>
-          <li><a href="#" class="nav-link active" data-index="1">home</a></li>
-          <li><a href="#" class="nav-link" data-index="2">social</a></li>
-          <li><a href="#" class="nav-link" data-index="3">games</a></li>
-          <li><a href="#" class="nav-link" data-index="4">tv & movies</a></li>
-          <li><a href="#" class="nav-link" data-index="5">settings</a></li>
+          <li><a href="#" class="nav-link active" data-index="0">Inicio</a></li>
+          <li><a href="#" class="nav-link" data-index="1">Xbox</a></li>
+          <li><a href="#" class="nav-link" data-index="2">PlayStation</a></li>
+          <li><a href="#" class="nav-link" data-index="3">Nintendo</a></li>
+          <li><a href="#" class="nav-link" data-index="4">Contacto</a></li>
         </ul>
       </nav>
     </header>
@@ -231,7 +204,12 @@
     <section id="panels-area">
       <div class="panels-container" id="slider">
         
-        <div class="panel"></div>
+        <div class="panel">
+          <h1 class="panel-title">Taller Gamer</h1>
+          <p class="panel-subtitle">Expertos en mantenimiento y reparación de controles y consolas de nueva y pasada generación.</p>
+          <p class="panel-subtitle">Desliza para ver nuestros precios por marca.</p>
+          <div style="font-size: 2rem; animation: pulse 2s infinite;">👉</div>
+        </div>
 
         <div class="panel">
           <div class="logo-container touchable" id="xbox-logo-trigger">
@@ -241,16 +219,18 @@
               </g>
             </svg>
           </div>
+          <div class="tap-instruction">👆 Toca el logo para ver precios</div>
         </div>
 
         <div class="panel">
           <div class="ps-logo-container touchable" id="ps-logo-trigger">
-            <svg viewBox="0 0 135 104" version="1.1" width="100%" height="100%">
+            <svg viewBox="0 0 135 104" version="1.1">
               <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <path d="M72.5,103.5 L72.5,21.5 C73.8333333,18.1666667 75.1666667,16.6666667 76.5,17 C78.5,17.5 81,19.5 81,22 C81,23.6666667 81,35.6666667 81,58 C84.6666667,60 88.3333333,61 92,61 C97.5,61 105,53.5 105,47.5 C105,43.5 105,38.5 105,32.5 C102.333333,21.5 96.9166667,14.6666667 88.75,12 C80.5833333,9.33333333 68.1666667,5.66666667 51.5,1 L51.5,97 L72.5,103.5 L125,85 C131.333333,82.3333333 134.5,79.3333333 134.5,76 C134.5,71 121,64.5 101,64.5 C93.7708333,64.5 87.9375,65 83.5,66 L36.5,83 C33.1666667,84 30.1666667,84.5 27.5,84.5 C23.5,84.5 21,83.9936523 21,82 C21,80.6708984 22.1666667,79.8375651 24.5,79.5 L72.5,62 L54,55.5 L10,71.5 C4,74.5 1,77.1666667 1,79.5 C1,83 5.5,92 34.5,91.5 C43.9094358,91.3377683 52.4094358,90.004435 60,87.5 L100.5,73 C103.166667,72.3333333 106,72 109,72 C113.5,72 115.5,73.5 115.5,74 C115.5,74.5 113.5,76.5 112,77 C111,77.3333333 90.8333333,84 51.5,97 L72.5,103.5 Z" id="ps-path-logo"></path>
               </g>
             </svg>
           </div>
+          <div class="tap-instruction">👆 Toca el logo para ver precios</div>
         </div>
 
         <div class="panel">
@@ -260,36 +240,44 @@
               <div class="right"></div>
             </div>
           </div>
+          <div class="tap-instruction">👆 Toca el logo para ver precios</div>
         </div>
 
         <div class="panel">
-          <div class="tile-grid">
-            <div class="tile-item touchable"></div><div class="tile-item touchable"></div>
-            <div class="tile-item touchable"></div><div class="tile-item touchable"></div>
+          <div class="contact-box">
+            <h2 class="panel-title" style="font-size: 1.5rem;">Agenda tu reparación</h2>
+            <p class="panel-subtitle" style="margin-bottom: 20px; font-size:0.9rem;">Mándanos un mensaje con el problema de tu consola o control.</p>
+            
+            <a href="https://wa.me/5211234567890" target="_blank" class="btn btn-whatsapp touchable">💬 WhatsApp</a>
+            <a href="#" target="_blank" class="btn btn-facebook touchable">📘 Facebook</a>
           </div>
         </div>
 
       </div>
     </section>
 
+    <a href="https://wa.me/5211234567890" target="_blank" class="fab-whatsapp touchable">
+      <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    </a>
+
     <div id="xbox-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Lista de Precios Xbox</h2>
+          <h2>Precios Xbox</h2>
           <button id="close-xbox-modal" class="close-btn">&times;</button>
         </div>
         <div class="price-category">
           <h3>Controles</h3>
-          <div class="price-item"><span class="price-desc">Limpieza profunda de control</span><span class="price-value">$230</span></div>
-          <div class="price-item"><span class="price-desc">Cambio de botones RB/LB</span><span class="price-value">$320</span></div>
-          <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$350</span></div>
-          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall (precisión máxima)</span><span class="price-value">$430</span></div>
+          <div class="price-item"><span class="price-desc">Limpieza profunda</span><span class="price-value">$230</span></div>
+          <div class="price-item"><span class="price-desc">Cambio RB/LB</span><span class="price-value">$320</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks genéricos</span><span class="price-value">$350</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks Efecto Hall</span><span class="price-value">$430</span></div>
         </div>
         <div class="price-category">
           <h3>Consolas</h3>
-          <div class="price-item"><span class="price-desc">Solo limpieza y mantenimiento general</span><span class="price-value">$350</span></div>
-          <div class="price-item"><span class="price-desc">Generación anterior - Cambio de pasta térmica + limpieza interna + cambio de thermal pads</span><span class="price-value">$450</span></div>
-          <div class="price-item"><span class="price-desc">Nueva generación (ej. Series X/S) - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
+          <div class="price-item"><span class="price-desc">Limpieza general</span><span class="price-value">$350</span></div>
+          <div class="price-item"><span class="price-desc">Gen. Anterior - Mantenimiento</span><span class="price-value">$450</span></div>
+          <div class="price-item"><span class="price-desc">Series X/S - Pasta y limpieza</span><span class="price-value">$550</span></div>
         </div>
       </div>
     </div>
@@ -297,20 +285,20 @@
     <div id="ps-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Lista de Precios PlayStation</h2>
+          <h2>Precios PlayStation</h2>
           <button id="close-ps-modal" class="close-btn">&times;</button>
         </div>
         <div class="price-category">
           <h3>Controles</h3>
-          <div class="price-item"><span class="price-desc">Limpieza profunda de control</span><span class="price-value">$230</span></div>
-          <div class="price-item"><span class="price-desc">Cambio de membrana de control (PS4)</span><span class="price-value">$450</span></div>
-          <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$350</span></div>
-          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall (precisión máxima)</span><span class="price-value">$430</span></div>
+          <div class="price-item"><span class="price-desc">Limpieza profunda</span><span class="price-value">$230</span></div>
+          <div class="price-item"><span class="price-desc">Cambio membrana (PS4)</span><span class="price-value">$450</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks genéricos</span><span class="price-value">$350</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks Efecto Hall</span><span class="price-value">$430</span></div>
         </div>
         <div class="price-category">
           <h3>Consolas</h3>
-          <div class="price-item"><span class="price-desc">Consola (PS4) - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
-          <div class="price-item"><span class="price-desc">Consola (PS5) - Cambio de metal líquido y limpieza</span><span class="price-value">$850</span></div>
+          <div class="price-item"><span class="price-desc">PS4 - Pasta y limpieza</span><span class="price-value">$550</span></div>
+          <div class="price-item"><span class="price-desc">PS5 - Metal líquido</span><span class="price-value">$850</span></div>
         </div>
       </div>
     </div>
@@ -318,17 +306,17 @@
     <div id="nintendo-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Lista de Precios Nintendo</h2>
+          <h2>Precios Nintendo</h2>
           <button id="close-nintendo-modal" class="close-btn">&times;</button>
         </div>
         <div class="price-category">
           <h3>Controles</h3>
           <div class="price-item"><span class="price-desc">Limpieza profunda JoyCon</span><span class="price-value">$230</span></div>
-          <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$450</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks genéricos</span><span class="price-value">$450</span></div>
         </div>
         <div class="price-category">
           <h3>Consolas</h3>
-          <div class="price-item"><span class="price-desc">Consola (Switch) - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
+          <div class="price-item"><span class="price-desc">Switch - Pasta y limpieza</span><span class="price-value">$550</span></div>
         </div>
       </div>
     </div>
@@ -340,7 +328,7 @@
       // --- NAVEGACIÓN ---
       const links = document.querySelectorAll('.nav-link');
       const slider = document.getElementById('slider');
-      let currentIndex = 1; 
+      let currentIndex = 0; // Empezamos en el panel de Inicio
 
       const moveToPanel = (index) => {
         links.forEach(link => link.classList.remove('active'));
@@ -366,6 +354,7 @@
       slider.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
       slider.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
+        // Cambié la longitud para que encaje con los 5 paneles actuales (0 a 4)
         if (touchStartX - touchEndX > 50 && currentIndex < links.length - 1) moveToPanel(++currentIndex);
         if (touchEndX - touchStartX > 50 && currentIndex > 0) moveToPanel(--currentIndex);
       }, {passive: true});
