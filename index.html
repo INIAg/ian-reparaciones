@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dashboard :: Servicios Rápidos</title>
   
-  <!-- Fuente optimizada: Solo cargamos los grosores necesarios para que cargue más rápido -->
+  <!-- Fuente optimizada -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo:wght@300;400;700&display=swap" rel="stylesheet">
@@ -16,10 +16,9 @@
        ========================================================================== */
     * {
       box-sizing: border-box; margin: 0; padding: 0;
-      -webkit-tap-highlight-color: transparent; /* Quita el cuadro azul en Android/iOS al tocar */
+      -webkit-tap-highlight-color: transparent; 
     }
 
-    /* Agregamos ontouchstart para forzar que los celulares reconozcan los toques */
     body {
       font-family: "Exo", sans-serif;
       overflow: hidden;
@@ -33,8 +32,7 @@
       background: linear-gradient(to bottom, #d5d8d9 0%, #bec0c0 35%, #babcbc 42%, #c5c6c6 57%, #dcdddd 62%, #cacbcb 100%);
     }
 
-    /* ¡SOLUCIÓN CARGA LENTA! 
-       Se cambió la imagen pesada por un fondo de malla/gradiente generado por código que carga INSTANTÁNEAMENTE */
+    /* Fondo ultrarrápido sin imágenes pesadas */
     .backdropTop {
       position: absolute; top: 0; left: 0; width: 100%; height: 65%;
       background: radial-gradient(circle at 50% 0%, #3e4a50 0%, #151b1e 80%);
@@ -104,7 +102,7 @@
       display: flex; justify-content: center; align-items: center;
       border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       width: 220px; height: 220px; margin-top: -20%;
-      transition: transform 0.15s ease-out; /* Transición súper rápida para el tacto */
+      transition: transform 0.15s ease-out; 
       will-change: transform;
     }
     
@@ -134,14 +132,14 @@
     }
     .nintendo-switch .left {
       position: relative; border-radius: 54px 0 0 54px; 
-      animation: nintendo-left 2s infinite ease-in-out; /* Ahora se mueve infinitamente */
+      animation: nintendo-left 2s infinite ease-in-out; 
     }
     .nintendo-switch .left:before {
       position: absolute; content: ""; top: 25px; width: 37px; height: 37px; border-radius: 50%; background: #FFFFFF;
     }
     .nintendo-switch .right {
       position: relative; background: #FFFFFF; border-radius: 0 54px 54px 0; 
-      animation: nintendo-right 2s infinite ease-in-out; /* Ahora se mueve infinitamente */
+      animation: nintendo-right 2s infinite ease-in-out; 
     }
     .nintendo-switch .right:before {
       position: absolute; content: ""; top: 75px; width: 37px; height: 37px; border-radius: 50%; background: #E70013;
@@ -155,7 +153,7 @@
     @keyframes ps-colors { 0%, 100% { stroke: #00A394; } 25% { stroke: #E41017; } 50% { stroke: #FBB700; } 75% { stroke: #006DB4; } }
 
     /* ==========================================================================
-       Modales
+       Modales y Precios
        ========================================================================== */
     .services-modal {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -190,7 +188,7 @@
     #nintendo-services-modal .modal-header h2, #nintendo-services-modal .price-value { color: #E70013; }
   </style>
 </head>
-<body ontouchstart=""> <!-- ontouchstart vacío asegura respuestas táctiles en iOS -->
+<body ontouchstart=""> 
 
   <div id="dashboardwrapper">
     <div class="backdropTop"></div>
@@ -247,48 +245,77 @@
         </div>
 
         <!-- Panel 4: Otros Tiles -->
-        <div class="panel"><div class="tile-grid">
-          <div class="tile-item touchable"></div><div class="tile-item touchable"></div>
-          <div class="tile-item touchable"></div><div class="tile-item touchable"></div>
-        </div></div>
+        <div class="panel">
+          <div class="tile-grid">
+            <div class="tile-item touchable"></div><div class="tile-item touchable"></div>
+            <div class="tile-item touchable"></div><div class="tile-item touchable"></div>
+          </div>
+        </div>
 
       </div>
     </section>
 
-    <!-- Modales (se mantienen igual pero cargan instantáneamente) -->
+    <!-- Modales de Precios Completos -->
+    <!-- Modal Xbox -->
     <div id="xbox-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Lista de Precios Xbox</h2><button id="close-xbox-modal" class="close-btn">&times;</button>
+          <h2>Lista de Precios Xbox</h2>
+          <button id="close-xbox-modal" class="close-btn">&times;</button>
         </div>
         <div class="price-category">
           <h3>Controles</h3>
           <div class="price-item"><span class="price-desc">Limpieza profunda de control</span><span class="price-value">$230</span></div>
           <div class="price-item"><span class="price-desc">Cambio de botones RB/LB</span><span class="price-value">$320</span></div>
-        </div>
-      </div>
-    </div>
-    
-    <div id="ps-services-modal" class="services-modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Lista de Precios PS</h2><button id="close-ps-modal" class="close-btn">&times;</button>
+          <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$350</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall</span><span class="price-value">$430</span></div>
         </div>
         <div class="price-category">
-          <h3>Controles</h3>
-          <div class="price-item"><span class="price-desc">Limpieza profunda de control</span><span class="price-value">$230</span></div>
+          <h3>Consolas</h3>
+          <div class="price-item"><span class="price-desc">Limpieza y mantenimiento general</span><span class="price-value">$350</span></div>
+          <div class="price-item"><span class="price-desc">Gen. Anterior - Pasta térmica, limpieza y pads</span><span class="price-value">$450</span></div>
+          <div class="price-item"><span class="price-desc">Nueva Gen. (Series X/S) - Pasta y limpieza</span><span class="price-value">$550</span></div>
         </div>
       </div>
     </div>
 
+    <!-- Modal PlayStation -->
+    <div id="ps-services-modal" class="services-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Lista de Precios PS</h2>
+          <button id="close-ps-modal" class="close-btn">&times;</button>
+        </div>
+        <div class="price-category">
+          <h3>Controles</h3>
+          <div class="price-item"><span class="price-desc">Limpieza profunda de control</span><span class="price-value">$230</span></div>
+          <div class="price-item"><span class="price-desc">Cambio de membrana (PS4)</span><span class="price-value">$450</span></div>
+          <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$350</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall</span><span class="price-value">$430</span></div>
+        </div>
+        <div class="price-category">
+          <h3>Consolas</h3>
+          <div class="price-item"><span class="price-desc">PS4 - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
+          <div class="price-item"><span class="price-desc">PS5 - Cambio de metal líquido y limpieza</span><span class="price-value">$850</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Nintendo -->
     <div id="nintendo-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Lista de Precios Nintendo</h2><button id="close-nintendo-modal" class="close-btn">&times;</button>
+          <h2>Lista de Precios Nintendo</h2>
+          <button id="close-nintendo-modal" class="close-btn">&times;</button>
         </div>
         <div class="price-category">
           <h3>Controles</h3>
           <div class="price-item"><span class="price-desc">Limpieza profunda JoyCon</span><span class="price-value">$230</span></div>
+          <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$450</span></div>
+        </div>
+        <div class="price-category">
+          <h3>Consolas</h3>
+          <div class="price-item"><span class="price-desc">Switch - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
         </div>
       </div>
     </div>
@@ -330,8 +357,7 @@
         if (touchEndX - touchStartX > 50 && currentIndex > 0) moveToPanel(--currentIndex);
       }, {passive: true});
 
-      // --- ¡SOLUCIÓN DE EFECTOS TÁCTILES! ---
-      // Con JavaScript forzamos visualmente que el ícono "se hunda" al tocarlo en celular.
+      // --- EFECTOS TÁCTILES ---
       const touchables = document.querySelectorAll('.touchable');
       touchables.forEach(el => {
         el.addEventListener('touchstart', () => { el.style.transform = 'scale(0.92)'; }, {passive: true});
