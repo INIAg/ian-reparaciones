@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dashboard :: Servicios Rápidos</title>
   
-  <!-- Fuente optimizada -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo:wght@300;400;700&display=swap" rel="stylesheet">
@@ -106,9 +105,11 @@
       will-change: transform;
     }
     
+    /* REPARACIÓN: Forzar a los SVG a ocupar el 100% de su contenedor */
+    .logo-container svg, .ps-logo-container svg { width: 100%; height: 100%; }
+    
     /* Xbox */
     .logo-container { background: rgba(0,0,0,0.4); border-radius: 50%; padding: 15px; }
-    .logo-container svg { width: 100%; height: 100%; }
     path.xboxLogoAnimate {
       fill: gold; stroke: gold; stroke-width: 4px;
       stroke-dasharray: 1000; stroke-dashoffset: 1000;
@@ -165,7 +166,7 @@
     .modal-content {
       background: #1a1a1a; border-top: 5px solid #75bb3e; border-radius: 15px;
       padding: 20px; width: 92%; max-height: 85vh; overflow-y: auto; color: white;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.8); -webkit-overflow-scrolling: touch;
       transform: translateY(30px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .services-modal.visible .modal-content { transform: translateY(0) scale(1); }
@@ -175,8 +176,10 @@
     }
     .modal-header h2 { font-size: 1.4rem; color: #75bb3e; }
     .close-btn { background: none; border: none; color: #888; font-size: 2.5rem; line-height: 1; padding: 0 10px; cursor: pointer;}
+    
     .price-category { margin-bottom: 25px; }
-    .price-category h3 { font-size: 1.1rem; margin-bottom: 15px; color: #ccc; letter-spacing: 1px; }
+    .price-category h3 { font-size: 1.1rem; margin-bottom: 15px; color: #ccc; letter-spacing: 1px; text-transform: uppercase;}
+    
     .price-item { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid #333; }
     .price-item:last-child { border-bottom: none; }
     .price-desc { font-size: 0.95rem; color: #eaeaea; margin-bottom: 5px; }
@@ -186,6 +189,25 @@
     #ps-services-modal .modal-header h2, #ps-services-modal .price-value { color: #00A394; }
     #nintendo-services-modal .modal-content { border-color: #E70013; }
     #nintendo-services-modal .modal-header h2, #nintendo-services-modal .price-value { color: #E70013; }
+
+    /* ==========================================================================
+       REPARACIÓN: ESTILOS PARA COMPUTADORA (PC / Desktop)
+       ========================================================================== */
+    @media (min-width: 769px) {
+      header { height: 100px; justify-content: center; }
+      .global-nav-list { justify-content: center; gap: 30px; overflow-x: visible; }
+      .nav-link.active { border-bottom: none; }
+      #panels-area { margin-top: 40px; max-width: 1100px; height: 85%; }
+      .logo-container, .ps-logo-container, .nintendo-logo-container { width: 300px; height: 300px; margin-top: 0;}
+      .nintendo-switch { transform: scale(1); }
+      .tile-grid { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); overflow: visible; padding-bottom: 0;}
+      
+      /* Precios en línea para PC */
+      .modal-content { width: 90%; max-width: 600px; border: 3px solid; border-top: 3px solid; padding: 30px;}
+      .price-item { flex-direction: row; justify-content: space-between; align-items: center; }
+      .price-desc { margin-bottom: 0; padding-right: 20px;}
+      .price-value { align-self: auto; }
+    }
   </style>
 </head>
 <body ontouchstart=""> 
@@ -209,10 +231,8 @@
     <section id="panels-area">
       <div class="panels-container" id="slider">
         
-        <!-- Panel 0: Bing -->
         <div class="panel"></div>
 
-        <!-- Panel 1: Home (Xbox) -->
         <div class="panel">
           <div class="logo-container touchable" id="xbox-logo-trigger">
             <svg viewBox="-5 -5 100 100" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
@@ -223,10 +243,9 @@
           </div>
         </div>
 
-        <!-- Panel 2: Social (PlayStation) -->
         <div class="panel">
           <div class="ps-logo-container touchable" id="ps-logo-trigger">
-            <svg viewBox="0 0 135 104" version="1.1">
+            <svg viewBox="0 0 135 104" version="1.1" width="100%" height="100%">
               <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <path d="M72.5,103.5 L72.5,21.5 C73.8333333,18.1666667 75.1666667,16.6666667 76.5,17 C78.5,17.5 81,19.5 81,22 C81,23.6666667 81,35.6666667 81,58 C84.6666667,60 88.3333333,61 92,61 C97.5,61 105,53.5 105,47.5 C105,43.5 105,38.5 105,32.5 C102.333333,21.5 96.9166667,14.6666667 88.75,12 C80.5833333,9.33333333 68.1666667,5.66666667 51.5,1 L51.5,97 L72.5,103.5 L125,85 C131.333333,82.3333333 134.5,79.3333333 134.5,76 C134.5,71 121,64.5 101,64.5 C93.7708333,64.5 87.9375,65 83.5,66 L36.5,83 C33.1666667,84 30.1666667,84.5 27.5,84.5 C23.5,84.5 21,83.9936523 21,82 C21,80.6708984 22.1666667,79.8375651 24.5,79.5 L72.5,62 L54,55.5 L10,71.5 C4,74.5 1,77.1666667 1,79.5 C1,83 5.5,92 34.5,91.5 C43.9094358,91.3377683 52.4094358,90.004435 60,87.5 L100.5,73 C103.166667,72.3333333 106,72 109,72 C113.5,72 115.5,73.5 115.5,74 C115.5,74.5 113.5,76.5 112,77 C111,77.3333333 90.8333333,84 51.5,97 L72.5,103.5 Z" id="ps-path-logo"></path>
               </g>
@@ -234,7 +253,6 @@
           </div>
         </div>
 
-        <!-- Panel 3: Games (Nintendo) -->
         <div class="panel">
           <div class="nintendo-logo-container touchable" id="nintendo-logo-trigger">
             <div class="nintendo-switch">
@@ -244,7 +262,6 @@
           </div>
         </div>
 
-        <!-- Panel 4: Otros Tiles -->
         <div class="panel">
           <div class="tile-grid">
             <div class="tile-item touchable"></div><div class="tile-item touchable"></div>
@@ -255,8 +272,6 @@
       </div>
     </section>
 
-    <!-- Modales de Precios Completos -->
-    <!-- Modal Xbox -->
     <div id="xbox-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -268,40 +283,38 @@
           <div class="price-item"><span class="price-desc">Limpieza profunda de control</span><span class="price-value">$230</span></div>
           <div class="price-item"><span class="price-desc">Cambio de botones RB/LB</span><span class="price-value">$320</span></div>
           <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$350</span></div>
-          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall</span><span class="price-value">$430</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall (precisión máxima)</span><span class="price-value">$430</span></div>
         </div>
         <div class="price-category">
           <h3>Consolas</h3>
-          <div class="price-item"><span class="price-desc">Limpieza y mantenimiento general</span><span class="price-value">$350</span></div>
-          <div class="price-item"><span class="price-desc">Gen. Anterior - Pasta térmica, limpieza y pads</span><span class="price-value">$450</span></div>
-          <div class="price-item"><span class="price-desc">Nueva Gen. (Series X/S) - Pasta y limpieza</span><span class="price-value">$550</span></div>
+          <div class="price-item"><span class="price-desc">Solo limpieza y mantenimiento general</span><span class="price-value">$350</span></div>
+          <div class="price-item"><span class="price-desc">Generación anterior - Cambio de pasta térmica + limpieza interna + cambio de thermal pads</span><span class="price-value">$450</span></div>
+          <div class="price-item"><span class="price-desc">Nueva generación (ej. Series X/S) - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
         </div>
       </div>
     </div>
 
-    <!-- Modal PlayStation -->
     <div id="ps-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Lista de Precios PS</h2>
+          <h2>Lista de Precios PlayStation</h2>
           <button id="close-ps-modal" class="close-btn">&times;</button>
         </div>
         <div class="price-category">
           <h3>Controles</h3>
           <div class="price-item"><span class="price-desc">Limpieza profunda de control</span><span class="price-value">$230</span></div>
-          <div class="price-item"><span class="price-desc">Cambio de membrana (PS4)</span><span class="price-value">$450</span></div>
+          <div class="price-item"><span class="price-desc">Cambio de membrana de control (PS4)</span><span class="price-value">$450</span></div>
           <div class="price-item"><span class="price-desc">Cambio de joysticks genéricos</span><span class="price-value">$350</span></div>
-          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall</span><span class="price-value">$430</span></div>
+          <div class="price-item"><span class="price-desc">Joysticks con efecto Hall (precisión máxima)</span><span class="price-value">$430</span></div>
         </div>
         <div class="price-category">
           <h3>Consolas</h3>
-          <div class="price-item"><span class="price-desc">PS4 - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
-          <div class="price-item"><span class="price-desc">PS5 - Cambio de metal líquido y limpieza</span><span class="price-value">$850</span></div>
+          <div class="price-item"><span class="price-desc">Consola (PS4) - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
+          <div class="price-item"><span class="price-desc">Consola (PS5) - Cambio de metal líquido y limpieza</span><span class="price-value">$850</span></div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Nintendo -->
     <div id="nintendo-services-modal" class="services-modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -315,7 +328,7 @@
         </div>
         <div class="price-category">
           <h3>Consolas</h3>
-          <div class="price-item"><span class="price-desc">Switch - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
+          <div class="price-item"><span class="price-desc">Consola (Switch) - Cambio de pasta térmica y limpieza</span><span class="price-value">$550</span></div>
         </div>
       </div>
     </div>
